@@ -35,7 +35,7 @@
     <string name="app_build_date">11031528</string>
     <string name="app_connect2_5g_fault">This device can only be used through a 2.4G Hz WiFi connection, please use a 2.4G Hz WiFi network with a stable signal</string>
     <string name="app_connect3_failtoserver">Failed to connect to the server, please check your WIFI network connection. Or try to move your bike closer to the router and reconnect.</string>
-    <string name="app_name">Yesoul PAD+</string>
+    <string name="app_name">QZ Yesoul Companion</string>
     <string name="appbar_scrolling_view_behavior">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
     <string name="avg">Average</string>
     <string name="avg_power">Avg power</string>
