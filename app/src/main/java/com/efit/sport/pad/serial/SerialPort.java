@@ -18,14 +18,14 @@ public class SerialPort {
     private FileInputStream mFileInputStream;
     private FileOutputStream mFileOutputStream;
 
-    private native FileDescriptor Java_android_1serialport_1api_SerialPort_open(String str, int i, int i2, int i3, int i4, int i5);
+    private native FileDescriptor open(String str, int i, int i2, int i3, int i4, int i5);
 
     public native int clearBuf();
 
     public native int close();
 
     public SerialPort(File file, int i) throws SecurityException, IOException {
-        FileDescriptor open = Java_android_1serialport_1api_SerialPort_open(file.getAbsolutePath(), i, 8, 1, 1, 0);
+        FileDescriptor open = open(file.getAbsolutePath(), i, 8, 1, 1, 0);
         this.mFd = open;
         if (open != null) {
             this.mFileInputStream = new FileInputStream(this.mFd);
