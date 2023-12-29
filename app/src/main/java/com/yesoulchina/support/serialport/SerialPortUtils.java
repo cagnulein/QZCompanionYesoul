@@ -1,7 +1,7 @@
 package com.yesoulchina.support.serialport;
 
 import android.os.Build;
-import android_1serialport_1api.SerialPort;
+import com.efit.sport.pad.serial.SerialPort;
 import com.yesoulchina.support.serialport.Protocol;
 import com.yesoulchina.support.serialport.SerialProtocol;
 import com.yesoulchina.support.serialport.listener.OnBicycleLockStateChangedListener;

@@ -1,4 +1,4 @@
-package android_1serialport_1api;
+package com.efit.sport.pad.serial;
 
 import java.io.File;
 import java.io.FileDescriptor;
