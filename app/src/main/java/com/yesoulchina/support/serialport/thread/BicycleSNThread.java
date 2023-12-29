@@ -12,9 +12,11 @@ import com.yesoulchina.support.serialport.utils.HexUtil;
 import java.io.InputStream;
 import java.util.Arrays;
 
+/* loaded from: classes2.dex */
 public class BicycleSNThread extends Thread {
     private static final String TAG = "SN";
-    private Handler handler = new Handler(Looper.getMainLooper()) {
+    private Handler handler = new Handler(Looper.getMainLooper()) { // from class: com.yesoulchina.support.serialport.thread.BicycleSNThread.1
+        @Override // android.os.Handler
         public void handleMessage(Message message) {
             super.handleMessage(message);
             if (message != null) {
@@ -28,23 +30,24 @@ public class BicycleSNThread extends Thread {
                     return;
                 }
                 Object obj = message.obj;
-                if (BicycleSNThread.this.onBicycleReadSnListener != null && (obj instanceof String)) {
-                    BicycleSNThread.this.onBicycleReadSnListener.onSuccess(obj.toString());
+                if (BicycleSNThread.this.onBicycleReadSnListener == null || !(obj instanceof String)) {
+                    return;
                 }
+                BicycleSNThread.this.onBicycleReadSnListener.onSuccess(obj.toString());
             }
         }
     };
     private InputStream inputStream;
-    /* access modifiers changed from: private */
-    public OnBicycleReadSnListener onBicycleReadSnListener;
+    private OnBicycleReadSnListener onBicycleReadSnListener;
     private SerialPortUtils serialPortUtils;
 
-    public BicycleSNThread(SerialPortUtils serialPortUtils2, InputStream inputStream2, OnBicycleReadSnListener onBicycleReadSnListener2) {
-        this.onBicycleReadSnListener = onBicycleReadSnListener2;
-        this.inputStream = inputStream2;
-        this.serialPortUtils = serialPortUtils2;
+    public BicycleSNThread(SerialPortUtils serialPortUtils, InputStream inputStream, OnBicycleReadSnListener onBicycleReadSnListener) {
+        this.onBicycleReadSnListener = onBicycleReadSnListener;
+        this.inputStream = inputStream;
+        this.serialPortUtils = serialPortUtils;
     }
 
+    @Override // java.lang.Thread, java.lang.Runnable
     public void run() {
         super.run();
         Protocol.SerialData serialData = new Protocol.SerialData();
@@ -55,34 +58,34 @@ public class BicycleSNThread extends Thread {
         if (this.serialPortUtils.sendBuffer(bArr)) {
             while (!isInterrupted()) {
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(50L);
                 } catch (Exception unused) {
                     Thread.currentThread().interrupt();
                 }
                 try {
                     if (this.inputStream.available() > 0) {
                         SerialProtocol.FrameData readTonicData = SerialPortUtils.readTonicData(this.inputStream, serialData);
-                        if (readTonicData == null || readTonicData.type != 7) {
-                            SerialLog.m440d("硬件sn frameData ==null");
-                        } else {
+                        if (readTonicData != null && readTonicData.type == 7) {
                             try {
                                 String hexStringToString = HexUtil.hexStringToString(HexUtil.encodeHexStr(Arrays.copyOf(readTonicData.data, readTonicData.dataLen)));
-                                SerialLog.m440d("硬件sn -->" + hexStringToString);
+                                SerialLog.m67d("硬件sn -->" + hexStringToString);
                                 onReadSnSuccess(hexStringToString);
                                 Thread.currentThread().interrupt();
                             } catch (Exception unused2) {
                             }
+                        } else {
+                            SerialLog.m67d("硬件sn frameData ==null");
                         }
                     } else {
                         if (i > 4) {
                             Thread.currentThread().interrupt();
                         }
                         i++;
-                        SerialLog.m440d("硬件sn inputStreamAvailable <= 0");
+                        SerialLog.m67d("硬件sn inputStreamAvailable <= 0");
                     }
                     this.serialPortUtils.sendBuffer(bArr);
                 } catch (Exception e) {
-                    SerialLog.m440d("硬件sn 原始--> 读取失败--" + e.getLocalizedMessage());
+                    SerialLog.m67d("硬件sn 原始--> 读取失败--" + e.getLocalizedMessage());
                 }
             }
             return;

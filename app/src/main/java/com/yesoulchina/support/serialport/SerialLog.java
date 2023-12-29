@@ -13,6 +13,13 @@ public class SerialLog {
         }
     }
 
+    public static void m67d(String str) {
+        if (isDebug) {
+            Log.d(TAG, str);
+        }
+    }
+
+
     /* renamed from: i */
     public static void m441i(String str) {
         if (isDebug) {
