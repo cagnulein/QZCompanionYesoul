@@ -1,4 +1,4 @@
-package android_1serialport_1api;
+package android_serialport_api;
 
 import java.io.File;
 import java.io.FileDescriptor;
