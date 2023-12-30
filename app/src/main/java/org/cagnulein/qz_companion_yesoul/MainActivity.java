@@ -38,5 +38,7 @@ public class MainActivity extends AppCompatActivity {
         cadence = findViewById(R.id.cadence);
         resistance = findViewById(R.id.resistance);
         power = findViewById(R.id.power);
+
+        updateTask.run();
     }
 }

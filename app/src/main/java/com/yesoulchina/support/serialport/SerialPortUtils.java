@@ -1,6 +1,8 @@
 package com.yesoulchina.support.serialport;
 
 import android.os.Build;
+import android.util.Log;
+
 import android_serialport_api.SerialPort;
 import com.yesoulchina.support.serialport.Protocol;
 import com.yesoulchina.support.serialport.SerialProtocol;
@@ -196,6 +198,15 @@ public class SerialPortUtils {
         byte[] bArr = serialData.data;
         int i = serialData.offset;
         int read = i + inputStream2.read(bArr, i, 10);
+
+        StringBuilder hexString = new StringBuilder();
+        for (int l = 0; l < bArr.length; l++) {
+            // Convert each byte to a hexadecimal string and append it to the StringBuilder
+            String hex = String.format("%02X ", bArr[l]);
+            hexString.append(hex);
+        }
+        Log.d("QZ", "readTonicData << " + i + " " + read + " " + hexString.toString().trim());
+
         if (read > 1 && !SerialProtocol.isValidHead(bArr[0])) {
             int i2 = 0;
             while (true) {
