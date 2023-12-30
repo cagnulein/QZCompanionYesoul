@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class SerialLog {
     private static String TAG = "Serial";
-    private static boolean isDebug = false;
+    private static boolean isDebug = true;
 
     /* renamed from: d */
     public static void m440d(String str) {

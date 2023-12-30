@@ -200,7 +200,7 @@ public class SerialPortUtils {
         int read = i + inputStream2.read(bArr, i, 10);
 
         StringBuilder hexString = new StringBuilder();
-        for (int l = 0; l < bArr.length; l++) {
+        for (int l = 0; l < read; l++) {
             // Convert each byte to a hexadecimal string and append it to the StringBuilder
             String hex = String.format("%02X ", bArr[l]);
             hexString.append(hex);
