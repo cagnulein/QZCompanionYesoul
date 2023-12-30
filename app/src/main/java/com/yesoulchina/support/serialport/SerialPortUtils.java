@@ -221,10 +221,28 @@ public class SerialPortUtils {
                 }
             }
         }
+
+        hexString = new StringBuilder();
+        for (int l = 0; l < read; l++) {
+            // Convert each byte to a hexadecimal string and append it to the StringBuilder
+            String hex = String.format("%02X ", bArr[l]);
+            hexString.append(hex);
+        }
+        Log.d("QZ", "readTonicData2 << " + i + " " + read + " " + hexString.toString().trim());
+
         if (SerialProtocol.hasOneFrame(bArr, read) && (parseFrame = SerialProtocol.parseFrame(bArr)) != null) {
             int i3 = parseFrame.frameSize;
             read -= i3;
             System.arraycopy(bArr, i3, bArr, 0, read);
+
+            hexString = new StringBuilder();
+            for (int l = 0; l < read; l++) {
+                // Convert each byte to a hexadecimal string and append it to the StringBuilder
+                String hex = String.format("%02X ", bArr[l]);
+                hexString.append(hex);
+            }
+            Log.d("QZ", "readTonicData3 << " + i + " " + read + " " + hexString.toString().trim());
+
             serialData.offset = read;
             if (parseFrame.hasValidData()) {
                 return parseFrame;
