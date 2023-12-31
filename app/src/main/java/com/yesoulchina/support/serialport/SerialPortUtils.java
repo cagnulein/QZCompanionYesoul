@@ -230,24 +230,41 @@ public class SerialPortUtils {
         }
         Log.d("QZ", "readTonicData2 << " + i + " " + read + " " + hexString.toString().trim());
 
-        if (SerialProtocol.hasOneFrame(bArr, read) && (parseFrame = SerialProtocol.parseFrame(bArr)) != null) {
-            int i3 = parseFrame.frameSize;
-            read -= i3;
-            System.arraycopy(bArr, i3, bArr, 0, read);
+        int index = 0;
+        int read2 = read;
+        do {
+            byte[] bArr2 = serialData.data;
+            System.arraycopy(bArr, index, bArr2, 0, read2);
 
             hexString = new StringBuilder();
-            for (int l = 0; l < read; l++) {
+            for (int l = 0; l < read2; l++) {
                 // Convert each byte to a hexadecimal string and append it to the StringBuilder
-                String hex = String.format("%02X ", bArr[l]);
+                String hex = String.format("%02X ", bArr2[l]);
                 hexString.append(hex);
             }
-            Log.d("QZ", "readTonicData3 << " + i + " " + read + " " + hexString.toString().trim());
+            Log.d("QZ", "readTonicData3 << " + index + " " + read2 + " " + hexString.toString().trim());
 
-            serialData.offset = read;
-            if (parseFrame.hasValidData()) {
-                return parseFrame;
+            if (SerialProtocol.hasOneFrame(bArr2, read2) && (parseFrame = SerialProtocol.parseFrame(bArr2)) != null) {
+                int i3 = parseFrame.frameSize;
+                read -= i3;
+                System.arraycopy(bArr2, i3, bArr, 0, read);
+
+                hexString = new StringBuilder();
+                for (int l = 0; l < read; l++) {
+                    // Convert each byte to a hexadecimal string and append it to the StringBuilder
+                    String hex = String.format("%02X ", bArr[l]);
+                    hexString.append(hex);
+                }
+                Log.d("QZ", "readTonicData4 << " + i + " " + read + " " + hexString.toString().trim());
+
+                serialData.offset = read;
+                if (parseFrame.hasValidData()) {
+                    return parseFrame;
+                }
             }
-        }
+            index++;
+            read2--;
+        } while(read2 > 0);
         serialData.offset = read;
         return null;
     }
