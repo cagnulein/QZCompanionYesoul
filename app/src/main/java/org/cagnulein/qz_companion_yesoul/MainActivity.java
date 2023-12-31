@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
     SerialPortManager manager = SerialPortManager.getManager();
 
     private static void writeLog(String command) {
-        MainActivity.writeLog(command);
-        Log.i(LOG_TAG, command);
+        Log.d(LOG_TAG, command);
     }
 
     public void sendBroadcast(String messageStr) {
