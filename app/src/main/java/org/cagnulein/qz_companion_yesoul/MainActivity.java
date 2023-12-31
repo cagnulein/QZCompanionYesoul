@@ -65,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
+            if(socket == null) {
+                socket = new DatagramSocket();
+                socket.setBroadcast(true);
+            }
+
             byte[] sendData = messageStr.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, getBroadcastAddress(), this.clientPort);
             socket.send(sendPacket);
