@@ -98,3 +98,5 @@ At the start, select Power and choose Wahoo in Power, Cadence, Resistance.
 Then everything is as usual in ZWIFT.
 
 Start AirPlay and go to G1MAX.
+
+Originally posted here https://github.com/cagnulein/qdomyos-zwift/issues/1443#issuecomment-1875808318
